@@ -32,7 +32,6 @@ public class IPhoneXS extends Settings {
         log.info("Создание тектового файла с ссылками на объявления");
         LocalDateTime localDateTime = LocalDateTime.now();
         String dateTime = localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH mm"));
-        log.info("Создание тектового файла с ссылками на объявления");
         try {
             try (FileWriter writer = new FileWriter("Iphones XS 256gb " + dateTime + ".txt", false)) {
                 for (String s : adsPage.getAdsLinkText
