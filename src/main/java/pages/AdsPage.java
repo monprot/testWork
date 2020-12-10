@@ -21,7 +21,7 @@ public class AdsPage extends Base {
     }
 
     public List<String> getAdsLinkText(String xpath) {
-        List<String> linkTexts = new ArrayList<String>();
+        List<String> linkTexts = new ArrayList<>();
         List<WebElement> linkElements = getDriver().findElements(By.xpath(xpath));
         List<WebElement> adsPrice = getDriver().findElements(By.xpath
                 (xpath+"/../following-sibling::div//meta[@itemprop=\"price\"]"));
@@ -39,8 +39,3 @@ public class AdsPage extends Base {
         return linkTexts;
     }
 }
-////a[contains(@href,"iphone_xs_256")]
-//a[contains(@href,"iphone_xs_256") and not(contains(@href,"max")) ]
-//a[contains(@href,"iphone_xs_256") and not(contains(@href,"max")) and @data-marker="item-title" ]
-
-//(//a[contains(@href,"iphone_xs_256") and @data-marker="item-title" ])[1]/../following-sibling::div//meta[@itemprop="price"]
