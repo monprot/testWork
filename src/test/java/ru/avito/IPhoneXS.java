@@ -33,18 +33,16 @@ public class IPhoneXS extends Settings {
         LocalDateTime localDateTime = LocalDateTime.now();
         String dateTime = localDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH mm"));
         try {
-            try (FileWriter writer = new FileWriter("Iphones XS 256gb " + dateTime + ".txt", false)) {
-                for (String s : adsPage.getAdsLinkText
-                        ("//a[contains(@href,\"iphone_xs_256\") and @data-marker=\"item-title\" ]")) {
+            try (FileWriter writer = new FileWriter("IPhones XS 256gb " + dateTime + ".txt", false)) {
+                for (String s : adsPage.getAdsLinkText("iphone_xs_256", 10)) {
                     writer.write(s);
                     writer.append('\n');
                 }
                 writer.flush();
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
 
-            System.out.println(ex.getMessage());
+            log.error(ex.getMessage());
         }
 
     }

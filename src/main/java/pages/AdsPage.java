@@ -6,8 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selBase.Base;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+/**
+ * Авито. Страница с результатами поиска
+ */
 public class AdsPage extends Base {
     @FindBy(xpath = "//*[text()=\"По дате\"]")
     private WebElement selectSortByDate;
@@ -20,22 +25,33 @@ public class AdsPage extends Base {
         click(selectSortByDate);
     }
 
-    public List<String> getAdsLinkText(String xpath) {
-        List<String> linkTexts = new ArrayList<>();
-        List<WebElement> linkElements = getDriver().findElements(By.xpath(xpath));
-        List<WebElement> adsPrice = getDriver().findElements(By.xpath
-                (xpath+"/../following-sibling::div//meta[@itemprop=\"price\"]"));
-        int size;
-        if (linkElements.size() > 10) size = 10;
-        else size = linkElements.size();
 
-            for (int i = 0; i < size; i++) {
-                String linkText = adsPrice.get(i).getAttribute("content")
-                        + "  " + linkElements.get(i).getAttribute("href");
-                linkTexts.add(linkText);
-            }
+    /**
+     * Возвращает цен и ссылок соотвутствующих объявлений отсортированных по возрастанию цены
+     *
+     * @param item   часть ссылки на объявление
+     * @param amount кол-во объявлений
+     * @return List<String>
+     */
+    public List<String> getAdsLinkText(String item, int amount) {
+        List<String> priceAndLinkTexts = new ArrayList<>();
 
-        Collections.sort(linkTexts);
-        return linkTexts;
+        List<WebElement> adsLink = getDriver().findElements
+                (By.xpath("//a[contains(@href,\"" + item + "\") and @data-marker=\"item-title\" ]"));
+
+        List<WebElement> adsPrice = getDriver().findElements
+                (By.xpath("//a[contains(@href,\"" + item + "\") and @data-marker=\"item-title\" ]"
+                        + "/../following-sibling::div//meta[@itemprop=\"price\"]"));
+
+        int size = Math.min(adsLink.size(), amount);
+
+        for (int i = 0; i < size; i++) {
+            String linkText = adsPrice.get(i).getAttribute("content")
+                    + "  " + adsLink.get(i).getAttribute("href");
+            priceAndLinkTexts.add(linkText);
+        }
+
+        Collections.sort(priceAndLinkTexts);
+        return priceAndLinkTexts;
     }
 }

@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selBase.Base;
 
+/**
+ * Авито. Главная страница
+ */
 public class MainPage extends Base {
 
     @FindBy(id = "search")
@@ -20,12 +23,11 @@ public class MainPage extends Base {
     @FindBy(xpath = "//*[@data-marker=\"popup-location/region/input\"]")
     private WebElement inputLocation;
 
-    @FindBy(xpath = "(//*[text()=\"Москва\"])[1]")
+    @FindBy(xpath = "//ul[@data-marker=\"suggest-list\"]//*[text()=\"Москва\"]")
     private WebElement suggestLocation;
 
     @FindBy(xpath = "//*[@data-marker=\"popup-location/save-button\"]")
     private WebElement btnSaveLocation;
-
 
 
     public MainPage(WebDriver driver) {
